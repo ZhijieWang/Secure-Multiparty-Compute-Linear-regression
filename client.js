@@ -84,12 +84,12 @@ function connect() {
   var computation_id = $('#computation_id').val();
   var party_count = $('#count').val();
 
-  var options = {
-    party_count: party_count,
-       Zp: '2199023255531',
-    integer_digits: 6,
-    decimal_digits: 3
-  };
+  // var options = {
+  //   party_count: party_count,
+  //      Zp: '2199023255531',
+  //   integer_digits: 6,
+  //   decimal_digits: 3
+  // };
     /*
  
     Zp: '2147483647',
@@ -100,10 +100,10 @@ function connect() {
     integer_digits: 3,
     decimal_digits: 2
   }; */
-  //   Zp: '268435399',
-  //   integer_digits: 4,
-  //   decimal_digits: 2
-  // };
+    Zp: '268435399',
+    integer_digits: 4,
+    decimal_digits: 2
+  };
   options.onError = function (error) {
     $('#output').append("<p class='error'>"+error+'</p>');
   };

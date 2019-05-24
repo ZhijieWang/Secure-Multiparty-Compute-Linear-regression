@@ -7,8 +7,8 @@ var mpc = require('./mpc.js');
 var showProgress = true;
 
 // Zp and accuracies
-var Zp = '2199023255531';
-var integer_digits = 6;
+var Zp = '268435399';
+var integer_digits = 4;
 var decimal_digits = 2;
 
 var magnitude = new BigNumber(10).pow(decimal_digits);
@@ -75,7 +75,7 @@ function generateInputs() {
           k--;
           continue;
         }
-        console.log(p, {x: x.toFixed(), y: y.toFixed()})
+        
         inputs[p][t].push({x: x, y: y});
       }
     }
@@ -91,7 +91,7 @@ function generateInputs() {
   //   { x: [BigNumber], y: [BigNumber] },
   //   { x: [BigNumber], y: [BigNumber] },
   //   { x: [BigNumber], y: [BigNumber] } ] ]
-  console.log(inputs[1][0])
+  
   return inputs;
 }
 
