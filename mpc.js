@@ -101,36 +101,47 @@
             yAvg.open().then(function(yAvg) {
                 xAvg.open().then(function(xAvg) {
                     yDevSq.open().then(function(yDevSq) {
-                        var numerator = xyAvg.sub(xAvg * yAvg);
-                        numerator = numerator.smult(numerator);
-                        numerator = numerator.cmult(yDevSq);
-                        var denumerator = xSqAvg.ssub(xAvg * xAvg);
-                        denumerator = denumerator.smult(ySqAvg.ssub(yAvg * yAvg));
-                        denumerator = denumerator.cmult(xDevSq);
-                        var mSq = numerator.sdiv(denumerator);
-                        mSq.open().then(function(mSq) {
-                            var m = mSq.sqrt();
-                            m = jiff_instance.helpers.to_fixed(m);
-                            var p = yAvg.cmult(precision).csub(xAvg.cmult(m, null, false));
-                            p.open().then(function(p) {
-                                p = jiff_instance.helpers.to_fixed(p.div(precision));
-                                xDevSq.open().then(function(xDevSq) {
-                                    xAvg = jiff_instance.helpers.to_fixed(xAvg.div(precision))
-                                    yAvg = jiff_instance.helpers.to_fixed(yAvg.div(precision))
-                                    yDevSq = jiff_instance.helpers.to_fixed(yDevSq.div(precision))
-                                    xDevSq = jiff_instance.helpers.to_fixed(xDevSq.div(precision))
-                                    deferred.resolve({
-                                        x_avg: xAvg,
-                                        yAvg: yAvg,
-                                        xStd: xDevSq,
-                                        yStd: yDevSq,
-                                        a: m,
-                                        b: p
-                                    });
+                        xyAvg.open().then(function(xyAvg) {
+                            xDevSq.open().then(function(xDevSq) {
+                                xSqAvg.open().then(function(xSqAvg) {
+                                    ySqAvg.open().then(function(ySqAvg) {
+                                       	xAvg = jiff_instance.helpers.to_fixed(xAvg.div(precision)) 
+
+                                       	yAvg = jiff_instance.helpers.to_fixed(yAvg.div(precision))
+                                        yDevSq = jiff_instance.helpers.to_fixed(yDevSq.div(precision))
+                                        xDevSq = jiff_instance.helpers.to_fixed(xDevSq.div(precision))
+                                        xyAvg = jiff_instance.helpers.to_fixed(xyAvg.div(precision))
+                                        xSqAvg = jiff_instance.helpers.to_fixed(xSqAvg.div(precision))
+                                        ySqAvg = jiff_instance.helpers.to_fixed(ySqAvg.div(precision))
+                                        console.log({xAvg: xAvg.toFixed(), yAvg:yAvg.toFixed(), xStd:xDevSq.toFixed(), yStd:yDevSq.toFixed()});
+                                        var numerator = xyAvg - (xAvg * yAvg);
+                                        numerator = numerator * numerator;
+                                        numerator = numerator * yDevSq;
+                                        var denumerator = xSqAvg - (xAvg * xAvg)
+                                        denumerator = denumerator * (ySqAvg - (yAvg * yAvg));
+                                        denumerator = denumerator * (xDevSq);
+                                        console.log("nu",numerator)
+                                        console.log("de",denumerator)
+                                        var mSq = numerator / denumerator
+                                        console.log("msq",mSq)
+                                        var m = Math.sqrt(mSq);
+                                        var p = yAvg * (precision) - (xAvg * m);
+                                       
+                                        console.log("Xavg", xAvg.toFixed())
+                                        
+                                        deferred.resolve({
+                                            xAvg: xAvg,
+                                            yAvg: yAvg,
+                                            xStd: xDevSq,
+                                            yStd: yDevSq,
+                                            a: m,
+                                            b: p
+                                        })
+                                    })
                                 })
                             })
-                        })
-                    })
+                        });
+                    });
                 });
             });
         });

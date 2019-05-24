@@ -134,7 +134,8 @@ function leastSquares(points) {
   m = toFixed(m.sqrt());
   var p = avgY.minus(m.times(avgX));
   p = toFixed(p);
-  console.log("m : ", m.toFixed(), "p : ", p.toFixed())
+
+  console.log({xAvg: avgX.toFixed(), yAvg:avgY.toFixed(), xStd:xStdDev.toFixed(), yStd:yStdDev.toFixed(), a: m.toFixed(), b: p.toFixed()});
   return {xAvg: avgX, yAvg:avgY, xStd:xStdDev, yStd:yStdDev, a: m, b: p};
 }
 
