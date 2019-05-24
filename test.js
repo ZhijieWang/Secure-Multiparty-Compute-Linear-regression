@@ -45,20 +45,6 @@ var maxY = 5;
  */
 function generateInputs() {
   var inputs = {1:[], 2:[]};
- //  inputs = {
- //    1:[[
- //        {"x":BigNumber(1), "y":BigNumber(1960)}, {"x":BigNumber(2),"y":BigNumber(1970)}, {"x":BigNumber(3), "y":BigNumber(1980)},
- //         {"x":BigNumber(1), "y":BigNumber(1960)}, {"x":BigNumber(2),"y":BigNumber(1970)}, {"x":BigNumber(3), "y":BigNumber(1980)}
- //      ]],
- //    2:[[
- //        {"x":BigNumber(1), "y":BigNumber(1960)}, {"x":BigNumber(2),"y":BigNumber(1970)}, {"x":BigNumber(3), "y":BigNumber(1980)},
- //         {"x":BigNumber(1), "y":BigNumber(1960)}, {"x":BigNumber(2),"y":BigNumber(1970)}, {"x":BigNumber(3), "y":BigNumber(1980)}
- //      ]],
- //     3:[[
- //        {"x":BigNumber(1), "y":BigNumber(1960)}, {"x":BigNumber(2),"y":BigNumber(1970)}, {"x":BigNumber(3), "y":BigNumber(1980)},
- //         {"x":BigNumber(1), "y":BigNumber(1960)}, {"x":BigNumber(2),"y":BigNumber(1970)}, {"x":BigNumber(3), "y":BigNumber(1980)}
- //      ]],
- // }
 
   for (var t = 0; t < tests; t++) {
     for (var p = 1; p <= party_count; p++) {
@@ -80,18 +66,6 @@ function generateInputs() {
       }
     }
   }
-
-  // [ { x: [ [BigNumber] ], y: [ [BigNumber] ] },
-  // { x: [ [BigNumber] ], y: [ [BigNumber] ] },
-  // { x: [ [BigNumber] ], y: [ [BigNumber] ] } ]
-
-  // [ [ { x: [BigNumber], y: [BigNumber] },
-  //   { x: [BigNumber], y: [BigNumber] },
-  //   { x: [BigNumber], y: [BigNumber] },
-  //   { x: [BigNumber], y: [BigNumber] },
-  //   { x: [BigNumber], y: [BigNumber] },
-  //   { x: [BigNumber], y: [BigNumber] } ] ]
-  
   return inputs;
 }
 
@@ -131,12 +105,11 @@ function leastSquares(points) {
   denum = toFixed(toFixed(denum).times(xStdDev));
 
   var m = toFixed(num.div(denum));
-  m = toFixed(m.sqrt());
-  var p = avgY.minus(m.times(avgX));
-  p = toFixed(p);
-
-  console.log({xAvg: avgX.toFixed(), yAvg:avgY.toFixed(), xStd:xStdDev.toFixed(), yStd:yStdDev.toFixed(), a: m.toFixed(), b: p.toFixed()});
-  return {xAvg: avgX, yAvg:avgY, xStd:xStdDev, yStd:yStdDev, a: m, b: p};
+  m = Math.sqrt(m).toFixed(2);
+  var p = avgY.toFixed()-(m*avgX);
+  p = p.toFixed()
+  console.log({xAvg: avgX.toFixed(), yAvg:avgY.toFixed(), xStd:xStdDev.toFixed(), yStd:yStdDev.toFixed(), a: m, b: p})
+  return {xAvg: avgX.toFixed(), yAvg:avgY.toFixed(), xStd:xStdDev.toFixed(), yStd:yStdDev.toFixed(), a: m, b: p};
 }
 
 /**
@@ -212,7 +185,7 @@ describe('Test', function () {
 
           // assert results are accurate
           try {
-            assert.deepEqual(testResults[i].a.toString(), realResults[i].a.toString(), msg + ' SLOPE!');
+            assert.equal(testResults[i].a ,realResults[i].a, msg + ' SLOPE!');
             assert.deepEqual(testResults[i].b.toString(), realResults[i].b.toString(), msg + ' yINTERCEPT!');
           } catch (assertionError) {
             done(assertionError);

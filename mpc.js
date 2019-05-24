@@ -98,52 +98,87 @@
             xDevSq = xDevSq.cdiv(factor);
             yDevSq = yDevSq.cdiv(factor);
             // Finally, compute slope (squared)
-            yAvg.open().then(function(yAvg) {
-                xAvg.open().then(function(xAvg) {
-                    yDevSq.open().then(function(yDevSq) {
-                        xyAvg.open().then(function(xyAvg) {
-                            xDevSq.open().then(function(xDevSq) {
-                                xSqAvg.open().then(function(xSqAvg) {
-                                    ySqAvg.open().then(function(ySqAvg) {
-                                       	xAvg = jiff_instance.helpers.to_fixed(xAvg.div(precision)) 
-
-                                       	yAvg = jiff_instance.helpers.to_fixed(yAvg.div(precision))
-                                        yDevSq = jiff_instance.helpers.to_fixed(yDevSq.div(precision))
-                                        xDevSq = jiff_instance.helpers.to_fixed(xDevSq.div(precision))
-                                        xyAvg = jiff_instance.helpers.to_fixed(xyAvg.div(precision))
-                                        xSqAvg = jiff_instance.helpers.to_fixed(xSqAvg.div(precision))
-                                        ySqAvg = jiff_instance.helpers.to_fixed(ySqAvg.div(precision))
-                                        console.log({xAvg: xAvg.toFixed(), yAvg:yAvg.toFixed(), xStd:xDevSq.toFixed(), yStd:yDevSq.toFixed()});
-                                        var numerator = xyAvg - (xAvg * yAvg);
-                                        numerator = numerator * numerator;
-                                        numerator = numerator * yDevSq;
-                                        var denumerator = xSqAvg - (xAvg * xAvg)
-                                        denumerator = denumerator * (ySqAvg - (yAvg * yAvg));
-                                        denumerator = denumerator * (xDevSq);
-                                        console.log("nu",numerator)
-                                        console.log("de",denumerator)
-                                        var mSq = numerator / denumerator
-                                        console.log("msq",mSq)
-                                        var m = Math.sqrt(mSq);
-                                        var p = yAvg * (precision) - (xAvg * m);
-                                       
-                                        console.log("Xavg", xAvg.toFixed())
-                                        
-                                        deferred.resolve({
-                                            xAvg: xAvg,
-                                            yAvg: yAvg,
-                                            xStd: xDevSq,
-                                            yStd: yDevSq,
-                                            a: m,
-                                            b: p
+            var promises = []
+            promises.push(xAvg.open())
+            promises.push(yAvg.open())
+            promises.push(xDevSq.open())
+            promises.push(yDevSq.open())
+            promises.push(xyAvg.open())
+            promises.push(xSqAvg.open())
+            promises.push(ySqAvg.open())
+            // Promise.all(promises).then(function(value) {
+            //     xAvg = values[0].toFixed(2)
+            //     yAvg = values[1].toFixed(2)
+            //     xDevSq = values[2].toFixed(2)
+            //     yDevSq = values[3].toFixed(2)
+            //     xyAvg = values[4].toFixed(2)
+            //     xSqAvg = values[5].toFixed(2)
+            //     ySqAvg = values[6].toFixed(2)
+            //     var numerator = (xyAvg - (xAvg * yAvg))
+            //     numerator = (numerator * numerator)
+            //     numerator = (numerator * yDevSq)
+            //     // console.log({
+            //     //     xAvg: xAvg,
+            //     //     yAvg: yAvg,
+            //     //     xStd: xDevSq,
+            //     //     yStd: yDevSq,
+            //     //     a: m,
+            //     //     b: p
+            //     // })
+            //     var denumerator = (xSqAvg - (xAvg * xAvg))
+            //     denumerator = (denumerator * (ySqAvg - (yAvg * yAvg)))
+            //     denumerator = (denumerator * (xDevSq))
+            //     var mSq = (numerator / denumerator)
+            //     console.log(Math.sqrt(mSq))
+            //     var m = Math.sqrt(mSq).toFixed(2);
+            //     var p = yAvg - (xAvg * m);
+            //     deferred.resolve({
+            //         xAvg: xAvg,
+            //         yAvg: yAvg,
+            //         xStd: xDevSq,
+            //         yStd: yDevSq,
+            //         a: m,
+            //         b: p
+            //     })
+            // })
+                yAvg.open().then(function(yAvg) {
+                    xAvg.open().then(function(xAvg) {
+                        yDevSq.open().then(function(yDevSq) {
+                            xyAvg.open().then(function(xyAvg) {
+                                xDevSq.open().then(function(xDevSq) {
+                                    xSqAvg.open().then(function(xSqAvg) {
+                                        ySqAvg.open().then(function(ySqAvg) {
+                                           	xAvg = xAvg.toFixed(2)
+                                           	yAvg = yAvg.toFixed(2)
+                                            yDevSq = yDevSq.toFixed(2)
+                                            xDevSq = xDevSq.toFixed(2)
+                                            xyAvg = xyAvg.toFixed(2)
+                                            xSqAvg = xSqAvg.toFixed(2)
+                                            ySqAvg = ySqAvg.toFixed(2)
+                                            var numerator = (xyAvg - (xAvg * yAvg))
+                                            numerator = (numerator * numerator)
+                                            numerator = (numerator * yDevSq)
+                                            var denumerator = (xSqAvg - (xAvg * xAvg))
+                                            denumerator = (denumerator * (ySqAvg - (yAvg * yAvg)))
+                                            denumerator = (denumerator * (xDevSq))
+                                            var mSq = (numerator / denumerator)
+                                            var m = Math.sqrt(mSq).toFixed(2);
+                                            var p = yAvg - (xAvg * m);
+                                            deferred.resolve({
+                                                xAvg: xAvg,
+                                                yAvg: yAvg,
+                                                xStd: xDevSq,
+                                                yStd: yDevSq,
+                                                a: m,
+                                                b: p
+                                            })
                                         })
                                     })
                                 })
-                            })
+                            });
                         });
                     });
                 });
-            });
         });
         return deferred.promise();
     };

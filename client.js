@@ -1,8 +1,8 @@
 // The limits of the graph. The minimum and maximum X and Y values.
 var minX = -5;
 var maxX = 5;
-var minY = -5;
-var maxY = 5;
+var minY = 1950;
+var maxY = 2020;
 var maxAccuracy = 2;
 
 // Stores the coordinates of the vertices
@@ -84,8 +84,8 @@ function connect() {
   var computation_id = $('#computation_id').val();
   var party_count = $('#count').val();
 
-  // var options = {
-  //   party_count: party_count,
+  var options = {
+    party_count: party_count,
   //      Zp: '2199023255531',
   //   integer_digits: 6,
   //   decimal_digits: 3
