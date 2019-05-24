@@ -98,14 +98,14 @@
             xDevSq = xDevSq.cdiv(factor);
             yDevSq = yDevSq.cdiv(factor);
             // Finally, compute slope (squared)
-            var promises = []
-            promises.push(xAvg.open())
-            promises.push(yAvg.open())
-            promises.push(xDevSq.open())
-            promises.push(yDevSq.open())
-            promises.push(xyAvg.open())
-            promises.push(xSqAvg.open())
-            promises.push(ySqAvg.open())
+            // var promises = []
+            // promises.push(xAvg.open())
+            // promises.push(yAvg.open())
+            // promises.push(xDevSq.open())
+            // promises.push(yDevSq.open())
+            // promises.push(xyAvg.open())
+            // promises.push(xSqAvg.open())
+            // promises.push(ySqAvg.open())
             // Promise.all(promises).then(function(value) {
             //     xAvg = values[0].toFixed(2)
             //     yAvg = values[1].toFixed(2)
