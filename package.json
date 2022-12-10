@@ -63,7 +63,7 @@
     "chai": "^4.2.0",
     "eslint": "^4.19.1",
     "eslint-plugin-requirejs": "^2.0.1",
-    "express": "^4.16.3",
+    "express": "^4.17.3",
     "jsdoc": "^3.5.5",
     "marked": "^0.3.9",
     "minimist": "^1.2.0",
